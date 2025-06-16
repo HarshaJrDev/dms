@@ -1,37 +1,31 @@
-import React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "../screens/Home";
 
-import { Platform } from "react-native";
-import  MaterialIcons from "react-native-vector-icons/MaterialIcons";
-// import { useColorScheme } from "../hooks/useColorScheme";
-import { IconSymbol } from "../components/ui/IconSymbol";
-import { HapticTab } from "../components/HapticTab";
-import TabBarBackground from "../components/ui/TabBarBackground";
-import { Colors } from "../constants/Colors";
-import { getFcmToken } from "../services/FCMService";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Platform, View, StyleSheet } from "react-native";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import Ionicons from "react-native-vector-icons/Ionicons";
+
+import HomeScreen from "../screens/Home";
 import ProfileScreen from "../(tabs)/profile";
+
 
 const Tab = createBottomTabNavigator();
 
 export default function MainTabs() {
-  React.useEffect(() => {
-    getFcmToken();
-  }, []);
-
-//   const colorScheme = useColorScheme();
+  // useEffect(() => {
+  //   getFcmToken();
+  // }, []);
 
   return (
     <Tab.Navigator
       screenOptions={{
-        // tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: () => <TabBarBackground />,
+        tabBarActiveTintColor: "#4A6FE3",
+        tabBarInactiveTintColor: "#999",
         tabBarStyle: Platform.select({
-          ios: { position: "absolute" },
-          default: {},
+          ios: { position: "absolute", height: 70, paddingBottom: 10 },
+          android: { height: 60, paddingBottom: 8 },
         }),
+        tabBarBackground: () => <TabBarBackground />,
       }}
     >
       <Tab.Screen
@@ -39,8 +33,8 @@ export default function MainTabs() {
         component={HomeScreen}
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home-outline" size={size || 24} color={color} />
           ),
         }}
       />
@@ -49,11 +43,25 @@ export default function MainTabs() {
         component={ProfileScreen}
         options={{
           title: "Profile",
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="person" size={24} color={color} />
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="person" size={size || 24} color={color} />
           ),
         }}
       />
     </Tab.Navigator>
   );
 }
+
+// Optional: fallback TabBarBackground if you don’t have one
+function TabBarBackground() {
+  return <View style={styles.tabBarBg} />;
+}
+
+const styles = StyleSheet.create({
+  tabBarBg: {
+    flex: 1,
+    backgroundColor: "#fff",
+    borderTopColor: "#eee",
+    borderTopWidth: 1,
+  },
+});

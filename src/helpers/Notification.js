@@ -14,7 +14,7 @@ export const useFCM = () => {
         const fcmToken = await messaging().getToken();
         if (fcmToken) {
           console.log('FCM Token:', fcmToken);
-          Alert.alert('Your FCM Token', fcmToken);
+          // Alert.alert('Your FCM Token', fcmToken);
           // You can send this to your backend
         } else {
           console.log('Failed to get FCM token');

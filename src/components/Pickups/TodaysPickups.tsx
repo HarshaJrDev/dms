@@ -27,6 +27,7 @@ import { useAuthStore } from '../../stores/authStore';
 import { useRouteStore } from '../../stores/useRouteStore';
 import modalStyles from './Styles/modalStyles';
 import styles from './Styles/styles';
+import { ErrorBoundary } from '../../../Debug/ErrorBoundary';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -806,7 +807,8 @@ export default function TodaysPickups() {
   );
 
   return (
-    <View style={styles.container}>
+    <ErrorBoundary>
+         <View style={styles.container}>
       <ScrollView
         style={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
@@ -884,5 +886,9 @@ export default function TodaysPickups() {
         onOptimize={handleRouteOptimization}
       />
     </View>
+
+      </ErrorBoundary>
+
+ 
   );
 }

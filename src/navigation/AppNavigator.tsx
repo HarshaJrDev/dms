@@ -1,49 +1,32 @@
-import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useAuthStore } from "../stores/authStore";
-import LoginScreen from "../screens/Login";
-import MainTabs from "./MainTabs";
-import MapNavigationScreen from "../screens/mapnavigation";
-import NotificationsScreen from "../screens/notifications";
-import PickupHistoryScreen from "../screens/pickup-history";
+import React, { useEffect, useState } from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoginScreen from '../(auth)/login';
+import MainTabs from './MainTabs';
 
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
-  const { isAuthenticated } = useAuthStore();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const checkToken = async () => {
+      const token = await AsyncStorage.getItem('token');
+      setIsLoggedIn(!!token);
+    };
+    checkToken();
+  }, []);
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {isAuthenticated ? (
-        <>
-          <Stack.Screen name="MainTabs" component={MainTabs} />
-          <Stack.Screen
-            name="MapNavigation"
-            component={MapNavigationScreen}
-            options={{
-              headerShown: true,
-              title: "Navigation",
-              headerStyle: { backgroundColor: "#4A6FE3" },
-              headerTintColor: "#fff",
-            }}
-          />
-          <Stack.Screen
-            name="Notifications"
-            component={NotificationsScreen}
-            options={{
-              headerShown: true,
-              title: "Notifications",
-              headerStyle: { backgroundColor: "#4A6FE3" },
-              headerTintColor: "#fff",
-            }}
-          />
-          <Stack.Screen
-            name="PickupHistory"
-            component={PickupHistoryScreen}
-          />
-        </>
-      ) : (
+      {!isLoggedIn ? (
         <Stack.Screen name="Login" component={LoginScreen} />
+      ) : (
+        <>
+           <Stack.Screen name="MainTabs" component={MainTabs} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        </>
+     
       )}
     </Stack.Navigator>
   );

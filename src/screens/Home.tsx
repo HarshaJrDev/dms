@@ -15,77 +15,78 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Geolocation from "@react-native-community/geolocation";
 import { useNavigation } from "@react-navigation/native";
 import TodaysPickups from "../components/Pickups/TodaysPickups";
+import { ErrorBoundary } from "../../Debug/ErrorBoundary";
 
 
-const RouteOptimizationModal = ({ visible, onClose }) => {
-  const [startingPlace, setStartingPlace] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [returnTime, setReturnTime] = useState("");
-  const [unloadNoon, setUnloadNoon] = useState(false);
+// const RouteOptimizationModal = ({ visible, onClose }) => {
+//   const [startingPlace, setStartingPlace] = useState("");
+//   const [startTime, setStartTime] = useState("");
+//   const [returnTime, setReturnTime] = useState("");
+//   const [unloadNoon, setUnloadNoon] = useState(false);
 
-  return (
-    <Modal transparent animationType="slide" visible={visible} onRequestClose={onClose}>
-      <TouchableWithoutFeedback onPress={onClose}>
-        <View style={styles.modalOverlay} />
-      </TouchableWithoutFeedback>
+//   return (
+//     <Modal transparent animationType="slide" visible={visible} onRequestClose={onClose}>
+//       <TouchableWithoutFeedback onPress={onClose}>
+//         <View style={styles.modalOverlay} />
+//       </TouchableWithoutFeedback>
 
-      <View style={styles.modalContainer}>
-        <View style={styles.modalHeader}>
-          <Text style={styles.modalTitle}>Route Optimization</Text>
-          <TouchableOpacity onPress={onClose}>
-            <MaterialIcons name="close" size={24} color="#666" />
-          </TouchableOpacity>
-        </View>
+//       <View style={styles.modalContainer}>
+//         <View style={styles.modalHeader}>
+//           <Text style={styles.modalTitle}>Route Optimization</Text>
+//           <TouchableOpacity onPress={onClose}>
+//             <MaterialIcons name="close" size={24} color="#666" />
+//           </TouchableOpacity>
+//         </View>
 
-        <View style={styles.modalContent}>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Starting Place</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter starting location"
-              value={startingPlace}
-              onChangeText={setStartingPlace}
-            />
-          </View>
+//         <View style={styles.modalContent}>
+//           <View style={styles.inputContainer}>
+//             <Text style={styles.inputLabel}>Starting Place</Text>
+//             <TextInput
+//               style={styles.input}
+//               placeholder="Enter starting location"
+//               value={startingPlace}
+//               onChangeText={setStartingPlace}
+//             />
+//           </View>
 
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Start Time</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="HH:MM AM/PM"
-              value={startTime}
-              onChangeText={setStartTime}
-            />
-          </View>
+//           <View style={styles.inputContainer}>
+//             <Text style={styles.inputLabel}>Start Time</Text>
+//             <TextInput
+//               style={styles.input}
+//               placeholder="HH:MM AM/PM"
+//               value={startTime}
+//               onChangeText={setStartTime}
+//             />
+//           </View>
 
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Return Time</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="HH:MM AM/PM"
-              value={returnTime}
-              onChangeText={setReturnTime}
-            />
-          </View>
+//           <View style={styles.inputContainer}>
+//             <Text style={styles.inputLabel}>Return Time</Text>
+//             <TextInput
+//               style={styles.input}
+//               placeholder="HH:MM AM/PM"
+//               value={returnTime}
+//               onChangeText={setReturnTime}
+//             />
+//           </View>
 
-          <View style={styles.checkboxContainer}>
-            <TouchableOpacity
-              style={[styles.checkbox, unloadNoon && styles.checkboxChecked]}
-              onPress={() => setUnloadNoon(!unloadNoon)}
-            >
-              {unloadNoon && <MaterialIcons name="check" size={18} color="#fff" />}
-            </TouchableOpacity>
-            <Text style={styles.checkboxLabel}>Unload truck at noon and continue</Text>
-          </View>
+//           <View style={styles.checkboxContainer}>
+//             <TouchableOpacity
+//               style={[styles.checkbox, unloadNoon && styles.checkboxChecked]}
+//               onPress={() => setUnloadNoon(!unloadNoon)}
+//             >
+//               {unloadNoon && <MaterialIcons name="check" size={18} color="#fff" />}
+//             </TouchableOpacity>
+//             <Text style={styles.checkboxLabel}>Unload truck at noon and continue</Text>
+//           </View>
 
-          <TouchableOpacity style={styles.submitButton}>
-            <Text style={styles.submitButtonText}>Optimize Route</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </Modal>
-  );
-};
+//           <TouchableOpacity style={styles.submitButton}>
+//             <Text style={styles.submitButtonText}>Optimize Route</Text>
+//           </TouchableOpacity>
+//         </View>
+//       </View>
+//     </Modal>
+//   );
+// };
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -138,7 +139,8 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <ErrorBoundary>
+        <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <View style={styles.profileHeader}>
@@ -168,8 +170,11 @@ const HomeScreen = () => {
       </View>
 
       <TodaysPickups />
-      <RouteOptimizationModal visible={modalVisible} onClose={() => setModalVisible(false)} />
+      {/* <RouteOptimizationModal visible={modalVisible} onClose={() => setModalVisible(false)} /> */}
     </View>
+
+    </ErrorBoundary>
+  
   );
 };
 

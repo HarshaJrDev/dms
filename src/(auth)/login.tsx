@@ -15,6 +15,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import { login } from "../services/authSevice";
 import { useAuthStore } from "../stores/authStore";
+import { ErrorBoundary } from "../../Debug/ErrorBoundary";
 
 const DEFAULT_EMAIL = "Harsha10@gmail.com";
 const DEFAULT_PASSWORD = "Harsha10@gmail.com";
@@ -54,10 +55,7 @@ export default function LoginScreen() {
       const storedUser = await AsyncStorage.getItem("user");
       console.log("📦 Stored AsyncStorage User:", JSON.parse(storedUser || "{}"));
 
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "Home" }],
-      });
+      navigation.navigate("MainTabs")
     },
     onError: (error) => {
       console.log("❌ Login Failed:", error);
@@ -74,7 +72,8 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <ErrorBoundary>
+        <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
           source={require("../../assets/images/login-illustration.png")}
@@ -146,6 +145,9 @@ export default function LoginScreen() {
         </TouchableOpacity>
       </View>
     </View>
+
+    </ErrorBoundary>
+  
   );
 }
 
