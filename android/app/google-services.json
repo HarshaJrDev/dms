@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "755455345706",
+    "project_id": "qrizz-414116",
+    "storage_bucket": "qrizz-414116.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:755455345706:android:91ea33ce94304f35ae6f53",
+        "android_client_info": {
+          "package_name": "com.donar.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "755455345706-4rqjcs6ko78m927f60k8uip1urqgjqvg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSiUQOY4dlfpo4rClzueaqSjODaHti464"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "755455345706-4rqjcs6ko78m927f60k8uip1urqgjqvg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
